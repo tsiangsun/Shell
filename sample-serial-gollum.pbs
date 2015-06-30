@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -S /bin/bash
+#PBS -N MYPROGRAM
+#PBS -o MYPROGRAM-JOBINDEX.out
+#PBS -q guest
+#PBS -q geva
+#PBS -j oe
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=150:00:00
+#PBS -l pmem=1gb
+#PBS -M xiangs@umich.edu
+#PBS -m ae
+#PBS -r n
+#PBS -V
+#
+jobname="MYPROGRAM"
+echo Start on `date`
+echo Job run on $PBS_NODEFILE
+
+cd $PBSREMOTEDIR 
+pwd >> $PBS_O_WORKDIR/$jobname.PBSDIR
+cp $PBS_O_WORKDIR/$jobname . 
+
+./$jobname JOBINDEX
+
+echo Job $jobname finished on `date`
+mv * $PBS_O_WORKDIR/
+
+
